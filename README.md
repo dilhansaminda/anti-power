@@ -1,6 +1,6 @@
 # Antigravity Power 增强补丁
 
-[![版本](https://img.shields.io/badge/版本-v1.1.0-blue.svg)](https://github.com/daoif/anti-power/releases)
+[![版本](https://img.shields.io/badge/版本-v1.2.0-blue.svg)](https://github.com/daoif/anti-power/releases)
 [![Antigravity](https://img.shields.io/badge/支持_Antigravity-v1.13.3-green.svg)](https://codeium.com/antigravity)
 
 针对 **Antigravity AI IDE** 的增强补丁，优化深色主题下的使用体验。
@@ -34,6 +34,12 @@ Antigravity 是一款优秀的 AI IDE，但在日常使用中难免会遇到一�
 每个内容区域右上角新增悬浮复制按钮：
 - 👆 鼠标悬停时显示，不影响阅读
 - ⚡ 独立于反馈按钮，复制更便捷
+
+### 5. Mermaid 流程图渲染 🆕
+自动渲染 AI 返回的 Mermaid 图表：
+- 📊 支持流程图、时序图、类图等多种图表类型
+- 🎨 自动适配深色主题配色
+- 📋 复制时自动还原为 Mermaid 源码
 
 ## 📥 下载安装
 
@@ -95,6 +101,7 @@ C:\Program Files\Antigravity\resources\app\extensions\antigravity\
 
 | 补丁版本 | 支持的 Antigravity 版本 | 发布日期 |
 |---------|------------------------|----------|
+| v1.2.0  | v1.13.3                | 2026-01-13 |
 | v1.1.0  | v1.13.3                | 2026-01-13 |
 | v1.0.0  | v1.13.3                | 2026-01-13 |
 
