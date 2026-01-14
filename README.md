@@ -1,8 +1,20 @@
-# Antigravity Power 增强补丁
+<p align="center">
+  <img src="docs/images/LOGO.png" alt="Anti-Power" width="120">
+</p>
 
-[![版本](https://img.shields.io/badge/版本-v1.2.1-blue.svg)](https://github.com/daoif/anti-power/releases)
-[![Antigravity](https://img.shields.io/badge/支持_Antigravity-v1.13.3-green.svg)](https://codeium.com/antigravity)
-[![开源协议](https://img.shields.io/badge/协议-MIT-orange.svg)](LICENSE)
+<h1 align="center">Anti-Power 增强补丁</h1>
+
+<p align="center">
+  <a href="https://github.com/daoif/anti-power/releases">
+    <img src="https://img.shields.io/badge/版本-v2.0.0-blue.svg" alt="版本">
+  </a>
+  <a href="https://codeium.com/antigravity">
+    <img src="https://img.shields.io/badge/支持_Antigravity-v1.14.2-green.svg" alt="Antigravity">
+  </a>
+  <a href="LICENSE">
+    <img src="https://img.shields.io/badge/协议-MIT-orange.svg" alt="开源协议">
+  </a>
+</p>
 
 > 🚀 针对 **Antigravity AI IDE** 的增强补丁，让你的 AI 对话体验更上一层楼！
 

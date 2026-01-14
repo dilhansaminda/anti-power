@@ -4,24 +4,41 @@ import { renderMath } from './math.js';
 import { renderMermaid } from './mermaid.js';
 
 /**
+ * 功能配置（由入口传入）
+ */
+let config = {
+    mermaid: true,
+    math: true,
+    copyButton: true,
+    tableColor: true
+};
+
+/**
  * 扫描根节点并处理需要增强的内容区域
  * @param {Element} root
  * @returns {void}
- * 说明：每次扫描都使用选择器查询，若性能压力大可考虑更细粒度的观察策略
  */
 const scan = (root) => {
     if (!root) return;
 
     root.querySelectorAll(CONTENT_SELECTOR).forEach((node) => {
-        ensureContentCopyButton(node);
-        void renderMath(node);
+        if (config.copyButton) {
+            ensureContentCopyButton(node);
+        }
+        if (config.math) {
+            void renderMath(node);
+        }
     });
 
-    root.querySelectorAll('[class*="language-mermaid"]').forEach((node) => {
-        void renderMermaid(node);
-    });
+    if (config.mermaid) {
+        root.querySelectorAll('[class*="language-mermaid"]').forEach((node) => {
+            void renderMermaid(node);
+        });
+    }
 
-    addFeedbackCopyButtons();
+    if (config.copyButton) {
+        addFeedbackCopyButtons();
+    }
 };
 
 /**
@@ -60,10 +77,14 @@ const init = () => {
 };
 
 /**
- * 模块入口：等待 DOM 就绪后启动
+ * 模块入口：接收配置并启动
+ * @param {Object} userConfig - 用户配置
  * @returns {void}
  */
-export const start = () => {
+export const start = (userConfig = {}) => {
+    // 合并用户配置
+    config = { ...config, ...userConfig };
+
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', init);
     } else {
