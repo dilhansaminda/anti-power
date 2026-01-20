@@ -24,6 +24,8 @@ let mermaidLoading = null;
 let mermaidId = 0;
 const MERMAID_RENDERING_PROP = '__managerMermaidRendering';
 const MERMAID_ERROR_PROP = '__managerMermaidErrorSource';
+const MERMAID_STABLE_DELAY = 400;
+const mermaidDeferred = new WeakMap();
 
 /**
  * 尝试创建 Mermaid 专用的 Trusted Types policy
@@ -34,8 +36,8 @@ const ensureMermaidPolicy = () => {
     const tt = window.trustedTypes;
     if (!tt?.createPolicy) return null;
 
-    // 尝试使用 CSP 中允许的 policy 名称
-    const policyNames = ['dompurifyMermaid', 'mermaid', 'dompurify'];
+    // 尝试使用 CSP 中允许的 policy 名称（managerPanel 是我们专门添加的）
+    const policyNames = ['managerPanel', 'dompurifyMermaid', 'mermaid', 'dompurify'];
     for (const name of policyNames) {
         try {
             mermaidPolicy = tt.createPolicy(name, {
@@ -116,6 +118,62 @@ const isMermaidSource = (source) => {
     return /^(graph|flowchart|sequenceDiagram|classDiagram|stateDiagram|erDiagram|gantt|pie|journey|gitGraph)/m.test(text);
 };
 
+const scheduleMermaidRender = (codeBlock) => {
+    if (!codeBlock || !codeBlock.isConnected) return;
+
+    const source = extractMermaidSource(codeBlock);
+    if (!isMermaidSource(source)) return;
+
+    const now = Date.now();
+    const existing = mermaidDeferred.get(codeBlock);
+
+    if (existing) {
+        if (existing.lastSource !== source) {
+            existing.lastSource = source;
+            existing.lastChange = now;
+        }
+        return;
+    }
+
+    const state = {
+        lastSource: source,
+        lastChange: now,
+        timerId: 0,
+    };
+
+    const attempt = () => {
+        mermaidDeferred.delete(codeBlock);
+        if (!codeBlock || !codeBlock.isConnected) return;
+
+        const currentSource = extractMermaidSource(codeBlock);
+        const currentTime = Date.now();
+
+        if (currentSource !== state.lastSource) {
+            state.lastSource = currentSource;
+            state.lastChange = currentTime;
+            state.timerId = window.setTimeout(attempt, MERMAID_STABLE_DELAY);
+            mermaidDeferred.set(codeBlock, state);
+            return;
+        }
+
+        const idleMs = currentTime - state.lastChange;
+        if (idleMs < MERMAID_STABLE_DELAY) {
+            state.timerId = window.setTimeout(attempt, MERMAID_STABLE_DELAY);
+            mermaidDeferred.set(codeBlock, state);
+            return;
+        }
+
+        if (!isMermaidSource(currentSource)) {
+            return;
+        }
+
+        void renderMermaid(codeBlock);
+    };
+
+    state.timerId = window.setTimeout(attempt, MERMAID_STABLE_DELAY);
+    mermaidDeferred.set(codeBlock, state);
+};
+
 const clearChildren = (el) => {
     while (el.firstChild) {
         el.removeChild(el.firstChild);
@@ -140,25 +198,47 @@ const resolveHideTarget = (codeBlock) => {
  * @param {HTMLElement} el - 包含 Mermaid 代码的 code-block 或其子元素
  */
 export const renderMermaid = async (el) => {
+    console.log('[Manager DEBUG] renderMermaid called', { elTag: el?.tagName, elClass: el?.className?.slice?.(0, 50) });
     const codeBlock = resolveCodeBlock(el);
-    if (!codeBlock) return;
+    if (!codeBlock) {
+        console.log('[Manager DEBUG] renderMermaid: no codeBlock found');
+        return;
+    }
 
     const source = extractMermaidSource(codeBlock);
-    if (!isMermaidSource(source)) return;
+    if (!isMermaidSource(source)) {
+        console.log('[Manager DEBUG] renderMermaid: not mermaid source', { sourcePreview: source.slice(0, 50) });
+        return;
+    }
+
+    console.log('[Manager DEBUG] renderMermaid: mermaid source detected', { sourceLen: source.length });
 
     const previousSource = codeBlock[MERMAID_SOURCE_PROP] || '';
     const isRendered = codeBlock.getAttribute(MERMAID_ATTR) === '1';
     const contentChanged = previousSource && previousSource !== source;
     const errorSource = codeBlock[MERMAID_ERROR_PROP] || '';
 
-    if (isRendered && !contentChanged) return;
-    if (!isRendered && !contentChanged && errorSource === source) return;
-    if (codeBlock[MERMAID_RENDERING_PROP]) return;
+    console.log('[Manager DEBUG] renderMermaid state', { isRendered, contentChanged, hasErrorSource: !!errorSource });
 
+    if (isRendered && !contentChanged) {
+        console.log('[Manager DEBUG] renderMermaid: already rendered, skipping');
+        return;
+    }
+    if (!isRendered && !contentChanged && errorSource === source) {
+        console.log('[Manager DEBUG] renderMermaid: error source matches, skipping');
+        return;
+    }
+    if (codeBlock[MERMAID_RENDERING_PROP]) {
+        console.log('[Manager DEBUG] renderMermaid: already rendering, skipping');
+        return;
+    }
+
+    console.log('[Manager DEBUG] renderMermaid: starting render');
     codeBlock[MERMAID_SOURCE_PROP] = source;
     codeBlock[MERMAID_RENDERING_PROP] = true;
 
     const loaded = await ensureMermaid();
+    console.log('[Manager DEBUG] renderMermaid: mermaid loaded', { loaded, hasMermaid: !!window.mermaid });
     if (!loaded || !window.mermaid) {
         delete codeBlock[MERMAID_RENDERING_PROP];
         return;
@@ -184,21 +264,46 @@ export const renderMermaid = async (el) => {
             clearChildren(container);
         }
 
+        // 注意：这里只插入容器，不隐藏代码块
+        // 代码块的隐藏放在渲染成功后，避免异步等待期间的不一致状态
         if (hideTarget?.parentNode) {
             if (!container.isConnected) {
                 hideTarget.parentNode.insertBefore(container, hideTarget);
             }
-            container.style.display = '';
-            hideTarget.style.display = 'none';
         } else if (codeBlock.parentNode && !container.isConnected) {
             codeBlock.parentNode.insertBefore(container, codeBlock);
-            container.style.display = '';
         }
 
-        const { svg, bindFunctions } = await withTrustedHTML(
-            () => window.mermaid.render(renderId, source, container),
-            mermaidPolicy  // 传递我们创建的 policy
-        );
+        // 详细日志：渲染前的状态
+        console.log('[Manager DEBUG] before mermaid.render', {
+            containerId: container.id,
+            containerConnected: container.isConnected,
+            containerDisplay: container.style.display,
+            containerRect: container.getBoundingClientRect ? JSON.stringify(container.getBoundingClientRect()) : 'N/A',
+            sourceLength: source.length,
+            sourcePreview: source.slice(0, 100),
+            renderId,
+        });
+
+        let renderResult;
+        try {
+            renderResult = await withTrustedHTML(
+                () => window.mermaid.render(renderId, source, container),
+                mermaidPolicy
+            );
+            console.log('[Manager DEBUG] mermaid.render succeeded', {
+                svgLength: renderResult?.svg?.length,
+            });
+        } catch (renderErr) {
+            console.log('[Manager DEBUG] mermaid.render failed', {
+                error: renderErr.message,
+                containerConnected: container.isConnected,
+                containerRect: container.getBoundingClientRect ? JSON.stringify(container.getBoundingClientRect()) : 'N/A',
+            });
+            throw renderErr;
+        }
+
+        const { svg, bindFunctions } = renderResult;
 
         const parser = new DOMParser();
         const doc = parser.parseFromString(svg, 'image/svg+xml');
@@ -225,6 +330,12 @@ export const renderMermaid = async (el) => {
             bindFunctions(container);
         }
 
+        // 渲染成功后才隐藏代码块并显示容器（与侧边栏实现对齐）
+        container.style.display = '';
+        if (hideTarget) {
+            hideTarget.style.display = 'none';
+        }
+
         codeBlock.setAttribute(MERMAID_ATTR, '1');
         delete codeBlock[MERMAID_ERROR_PROP];
     } catch (err) {
@@ -248,6 +359,7 @@ export const renderMermaid = async (el) => {
  * @param {HTMLElement} root
  */
 export const scanMermaid = (root) => {
+    console.log('[Manager DEBUG] scanMermaid called', { rootTag: root?.tagName, rootClass: root?.className?.slice?.(0, 50) });
     if (!root) return;
 
     const codeBlocks = [];
@@ -255,7 +367,8 @@ export const scanMermaid = (root) => {
         codeBlocks.push(root);
     }
     codeBlocks.push(...root.querySelectorAll('.code-block'));
+    console.log('[Manager DEBUG] scanMermaid found codeBlocks', { count: codeBlocks.length });
     codeBlocks.forEach((block) => {
-        void renderMermaid(block);
+        scheduleMermaidRender(block);
     });
 };

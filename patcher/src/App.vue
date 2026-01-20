@@ -10,7 +10,7 @@ import AboutModal from "./components/AboutModal.vue";
 import ConfirmModal from "./components/ConfirmModal.vue";
 
 // 常量
-const APP_VERSION = "2.1.0";
+const APP_VERSION = "2.2.0";
 const GITHUB_URL = "https://github.com/daoif/anti-power";
 
 // 补丁文件清单
@@ -53,6 +53,8 @@ const managerFeatures = ref({
   mermaid: false,
   math: false,
   copyButton: true,
+  maxWidthEnabled: false,
+  maxWidthRatio: 75,
   fontSizeEnabled: false,
   fontSize: 16,
 });
@@ -96,6 +98,8 @@ async function checkPatchStatus(path: string) {
         mermaid: boolean;
         math: boolean;
         copyButton: boolean;
+        maxWidthEnabled?: boolean;
+        maxWidthRatio?: number;
         fontSizeEnabled?: boolean;
         fontSize?: number;
       } | null>("read_manager_patch_config", { path });
@@ -383,3 +387,4 @@ onMounted(() => {
   transform: translateX(-50%) translateY(20px);
 }
 </style>
+

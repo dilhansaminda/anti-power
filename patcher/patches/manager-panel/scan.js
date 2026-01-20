@@ -94,7 +94,18 @@ const scheduleDeferredRender = (el) => {
         const totalMs = currentTime - state.startTime;
         const complete = isContentComplete(el);
 
-        if (complete || idleMs >= STABLE_RENDER_DELAY || totalMs >= STABLE_RENDER_MAX_WAIT) {
+        // 只有在以下情况才渲染：
+        // 1. 有 feedback 按钮（内容输出完成）
+        // 2. 或内容稳定超过最大等待时间（2.5秒）
+        // 注意：不再因为短暂的 400ms 稳定就触发，避免在 AI 输出间隙时误触发
+        if (complete) {
+            console.log('[Manager DEBUG] deferred render: complete, rendering');
+            renderContentNode(el, true);
+            return;
+        }
+
+        if (totalMs >= STABLE_RENDER_MAX_WAIT && idleMs >= STABLE_RENDER_DELAY) {
+            console.log('[Manager DEBUG] deferred render: max wait reached and stable, rendering');
             renderContentNode(el, true);
             return;
         }
@@ -113,13 +124,22 @@ const scheduleDeferredRender = (el) => {
  * @param {boolean} force
  */
 const renderContentNode = (el, force = false) => {
+    console.log('[Manager DEBUG] renderContentNode called', { el: el?.className, force, isConnected: el?.isConnected });
     if (!el || !el.isConnected) return;
+
+    if (config.mermaid) {
+        console.log('[Manager DEBUG] calling scanMermaid', { configMermaid: config.mermaid });
+        scanMermaid(el);
+    } else {
+        console.log('[Manager DEBUG] config.mermaid is false, skipping scanMermaid');
+    }
 
     if (config.copyButton) {
         ensureContentCopyButton(el);
     }
 
     const ready = force || isContentComplete(el);
+    console.log('[Manager DEBUG] ready check', { ready, force, isComplete: isContentComplete(el) });
     if (!ready) {
         scheduleDeferredRender(el);
         return;
@@ -128,11 +148,8 @@ const renderContentNode = (el, force = false) => {
     clearDeferredRender(el);
 
     if (config.math) {
+        console.log('[Manager DEBUG] calling renderMath');
         void renderMath(el);
-    }
-
-    if (config.mermaid) {
-        scanMermaid(el);
     }
 };
 
@@ -141,6 +158,7 @@ const renderContentNode = (el, force = false) => {
  * @param {HTMLElement} root
  */
 const scan = (root) => {
+    console.log('[Manager DEBUG] scan called', { rootTag: root?.tagName, isConnected: root?.isConnected });
     if (!root || !root.isConnected) return;
 
     // 查找内容区
@@ -149,13 +167,12 @@ const scan = (root) => {
         contentNodes.push(root);
     }
     contentNodes.push(...root.querySelectorAll(CONTENT_SELECTOR));
+    console.log('[Manager DEBUG] contentNodes found', { count: contentNodes.length, selector: CONTENT_SELECTOR });
 
     contentNodes.forEach((node) => renderContentNode(node));
 
-    // 额外扫描 section 区域内的 Mermaid
     if (config.mermaid) {
-        const sections = root.querySelectorAll(SECTION_SELECTOR);
-        sections.forEach((section) => scanMermaid(section));
+        scanMermaid(root);
     }
 };
 

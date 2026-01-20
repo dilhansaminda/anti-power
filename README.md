@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://github.com/daoif/anti-power/releases">
-    <img src="https://img.shields.io/badge/版本-v2.1.0-blue.svg" alt="版本">
+    <img src="https://img.shields.io/badge/版本-v2.2.0-blue.svg" alt="版本">
   </a>
   <a href="https://codeium.com/antigravity">
     <img src="https://img.shields.io/badge/支持_Antigravity-v1.14.2-green.svg" alt="Antigravity">
@@ -34,13 +34,6 @@ Antigravity 是一款优秀的 AI IDE，但在日常使用中难免会遇到一�
 
 ---
 
-## 🖼️ 工具预览
-
-<p align="center">
-  <img src="docs/images/patcher-screenshot.png" alt="Anti-Power Patcher" width="400">
-</p>
-
----
 ## ✨ 功能特性
 
 | 功能 | 描述 |
@@ -49,6 +42,7 @@ Antigravity 是一款优秀的 AI IDE，但在日常使用中难免会遇到一�
 | 📐 **数学公式渲染** | 支持 `$...$` 行内公式和 `$$...$$` 块级公式 |
 | 📋 **一键复制** | 侧边栏与 Manager 提供 Copy 按钮，自动转 Markdown |
 | 🎯 **表格颜色修复** | 修复深色主题下表格文字不可见问题 |
+| 🔠 **Manager 布局调节** | 支持对话宽度与字号调节 |
 | 👆 **悬浮复制按钮** | 内容区域右上角悬浮按钮，不影响阅读 |
 
 ### 复制功能亮点
@@ -62,49 +56,9 @@ Antigravity 是一款优秀的 AI IDE，但在日常使用中难免会遇到一�
 
 ## 📸 效果展示
 
-### 🎨 Mermaid 流程图渲染
-
-原版 Antigravity 只能显示 Mermaid 源代码，安装补丁后可以直接渲染为精美的流程图：
-
-![Mermaid 增强效果](docs/images/5.png)
-
-<details>
-<summary>👀 查看原版效果（点击展开）</summary>
-
-![Mermaid 原版效果](docs/images/6.png)
-
-</details>
+效果截图已迁移到 [docs/screenshots.md](docs/screenshots.md)。
 
 ---
-
-### 📐 数学公式渲染
-
-原版只能显示 LaTeX 源码，补丁启用后自动渲染为标准数学公式：
-
-![公式增强效果](docs/images/3.png)
-
-<details>
-<summary>👀 查看原版效果（点击展开）</summary>
-
-![公式原版效果](docs/images/4.png)
-
-</details>
-
----
-
-### 📋 一键复制 & 表格优化
-
-新增 **Copy** 按钮，一键复制 AI 返回内容为 Markdown 格式，同时修复表格颜色问题：
-
-![复制按钮展示](docs/images/2.png)
-
-复制后的内容自动转换为规范的 Markdown 格式，可直接粘贴到其他编辑器：
-
-![复制内容展示](docs/images/1.png)
-
----
-
-
 
 ## 📥 下载安装
 
@@ -114,28 +68,15 @@ Antigravity 是一款优秀的 AI IDE，但在日常使用中难免会遇到一�
 2. 双击运行，**无需安装**
 3. 程序会自动检测 Antigravity 安装路径
 4. 选择需要的功能，点击「安装补丁」即可
-5. 重启antigravity,或另外打开一个antigravity窗口查看效果
+5. 重启 Antigravity 或重新打开 Manager 窗口查看效果
 
-> ⚠️ **当前仅支持 Windows 系统**
+如需手动安装，下载 Release 中的补丁压缩包（例如 `anti-power-patches.zip`），并参考 `patcher/patches/manual-install.md`。
+
+> ⚠️ 安装器仅支持 Windows，macOS 请使用手动安装方式
 
 ### macOS
 
-macOS 版本正在开发中，敬请期待！
-
-如需在 macOS 上使用，可参考下方手动安装方式（使用 [v1.2.1](https://github.com/daoif/anti-power/releases/tag/v1.2.1) 旧版本）。
-
-<details>
-<summary><b>📁 macOS 手动安装方式（旧版）</b></summary>
-
-1. 下载 [v1.2.1](https://github.com/daoif/anti-power/releases/tag/v1.2.1) 的 `cascade-panel.html`
-2. 打开 **"应用程序 (Applications)"** 文件夹
-3. 右键点击 **Antigravity.app** → **"显示包内容 (Show Package Contents)"**
-4. 进入 `Contents/Resources/app/extensions/antigravity/`
-5. 备份原始 `cascade-panel.html`
-6. 用下载的文件替换
-7. 重启 Antigravity
-
-</details>
+当前安装器未适配mac，请使用 Release 附带的补丁压缩包，并参考 `patcher/patches/manual-install.md` 手动安装。
 
 ---
 
@@ -143,8 +84,9 @@ macOS 版本正在开发中，敬请期待！
 
 | 补丁版本 | 支持的 Antigravity 版本 | 发布日期 | 更新内容 |
 |---------|------------------------|----------|----------|
+| v2.2.0  | v1.14.2                | 2026-01-21 | Manager Mermaid/数学公式渲染、对话宽度/字号调节，感谢 @mikessslxxx |
 | v2.1.0  | v1.14.2                | 2026-01-19 | 侧边栏字体调节、Mermaid 报错提示优化、Manager 一键复制 |
-| v2.0.1  | v1.14.2                | 2026-01-14 | 性能优化，感谢 @mikessslxxx |
+| v2.0.1  | v1.14.2                | 2026-01-14 | 性能优化 |
 | v2.0.0  | v1.14.2                | 2026-01-14 | 新增 Tauri 工具，支持功能单独开关 |
 | v1.2.1  | v1.13.3                | 2026-01-13 | Bug 修复 |
 | v1.2.0  | v1.13.3                | 2026-01-13 | Mermaid 渲染 |
@@ -175,7 +117,7 @@ macOS 版本正在开发中，敬请期待！
 
 感谢以下贡献者对本项目的支持：
 
-- [@mikessslxxx](https://github.com/mikessslxxx) - v1.1.0 数学公式渲染、v2.0.1 性能优化
+- [@mikessslxxx](https://github.com/mikessslxxx)
 
 ---
 

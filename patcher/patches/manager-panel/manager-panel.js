@@ -7,6 +7,7 @@
  * - Mermaid 图表渲染
  * - 复制按钮
  * - 字体大小调整
+ * - 对话区域最大宽度
  */
 
 // 获取当前脚本的基础路径
@@ -17,6 +18,8 @@ const DEFAULT_CONFIG = {
     math: false,
     copyButton: true,
     tableColor: false,
+    maxWidthEnabled: false,
+    maxWidthRatio: 75,
     fontSizeEnabled: false,
     fontSize: 16,
 };
@@ -82,6 +85,31 @@ const applyFontSize = (userConfig) => {
 };
 
 /**
+ * 应用对话区域最大宽度
+ */
+const applyMaxWidth = (userConfig) => {
+    const root = document.documentElement;
+    if (!root) return;
+
+    if (!userConfig?.maxWidthEnabled) {
+        root.removeAttribute('data-manager-panel-max-width');
+        root.style.removeProperty('--manager-panel-max-width-ratio');
+        return;
+    }
+
+    const ratio = Number(userConfig.maxWidthRatio);
+    if (!Number.isFinite(ratio) || ratio <= 0) {
+        root.removeAttribute('data-manager-panel-max-width');
+        root.style.removeProperty('--manager-panel-max-width-ratio');
+        return;
+    }
+
+    const clamped = Math.min(100, Math.max(30, ratio));
+    root.setAttribute('data-manager-panel-max-width', '1');
+    root.style.setProperty('--manager-panel-max-width-ratio', String(clamped));
+};
+
+/**
  * 入口
  */
 (async () => {
@@ -97,6 +125,7 @@ const applyFontSize = (userConfig) => {
     // 加载配置
     const config = await loadConfig();
     applyFontSize(config);
+    applyMaxWidth(config);
 
     // 启动扫描
     const { start } = await import('./scan.js');
